@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ESP8266 MQTT Webpage</title>
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
+    <h1 id="message">Waiting for message...</h1>
+
+    <script>
+        // MQTT broker details
+        const broker = {
+            hostname: '8601e16f4eb74f42973b363418047712.s1.eu.hivemq.cloud', 
+            port: 8884, 
+            username: 'hivemq.webclient.1731248614617',
+            password: 'I0los5d3?1FxCUDv*.J!'
+        };
+
+        const options = {
+            keepalive: 60,
+            clean: true,
+            reconnectPeriod: 1000,
+            connectTimeout: 30 * 1000,
+            username: broker.username,
+            password: broker.password,
+            clientId: 'webclient_' + Math.random().toString(16).substr(2, 8)
+        };
+
+        const topic = 'health/steps';
+        const client = mqtt.connect(`wss://${broker.hostname}:${broker.port}/mqtt`, options);
+
+        client.on('connect', function () {
+            console.log('Connected to MQTT broker');
+            client.subscribe(topic, function (err) {
+                if (err) {
+                    console.error('Subscription error:', err);
+                } else {
+                    console.log('Subscribed to topic:', topic);
+                }
+            });
+        });
+
+        client.on('message', function (topic, message) {
+            console.log('Received message:', message.toString());
+            document.getElementById('message').innerText = message.toString();
+        });
+
+        client.on('error', function (err) {
+            console.error('Connection error:', err);
+        });
+    </script>
+</body>
+</html>
