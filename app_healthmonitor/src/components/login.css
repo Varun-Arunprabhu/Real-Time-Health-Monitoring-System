@@ -1,0 +1,18 @@
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.loginpage{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-image: url(C:\Users\varun\Desktop\genai_proj\disease-finder\public\elements\login_bg.jpg);
+    background-size: cover;
+}
+.overlay2{
+    padding-top: 40px;
+    padding-left: 150px;
+    width: 40%;
+    height: 100%;
+    background-color: rgb(216, 223, 228);
+}
